@@ -1,0 +1,295 @@
+.carousel-inner {
+    overflow:hidden;
+    height: 180px;
+    margin: 0 auto;
+} 
+
+.profil .circle {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    border: 1px solid rgba(85, 85, 85, 0.438);
+    text-align: right;
+    float: right;
+}
+
+.profil {
+    margin-top: 10px;
+    margin-bottom: -10px;
+}
+
+
+.profil h5 {
+    font-size: 16pt;
+    font-weight: 200;
+    font-family: Lobster;
+    margin-top: 20px;
+    margin-left: -20px;
+    color: #fa8231;
+}
+.profil p {
+    font-size: 10pt;
+    font-family: sans-serif;
+    margin-left: -20px;
+    color: #778ca3;
+}
+.card .card-title{
+    text-align: left;
+    font-family: Poppins;
+}
+.card .card-text{
+    text-align: left;
+    font-family: Poppins;
+    font-size: 10pt;
+}
+
+.card .card-deskripsi{
+    text-align: left !important;
+    font-family: Noto Sans TC;
+    font-size: 9pt;
+    color: #a5b1c2;
+}
+.card .card-deskripsi-normal{
+    text-align: left !important;
+    font-family: Noto Sans TC;
+    font-size: 13pt;
+    color: #2b2b2b;
+    font-weight: bold;
+}
+
+.float{
+	position:fixed;
+	width:40px;
+	height:40px;
+	bottom:40px;
+	right:40px;
+	background-color:rgb(255, 255, 255);
+	/* color:#FFF; */
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+.my-float{
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+
+.card-group .card {
+    margin-bottom: 15px;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.card-body a img{
+    width:40px;
+	height:40px;
+}
+
+.card-body .align-left{
+    text-align: start !important;
+}
+
+.btn-back img {
+    height: 30px;
+    float: left;
+}
+
+.img-mid-img {
+    margin-left: -100px;
+    margin-right: 75px;
+}
+
+.carousel-indicators li{
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+}
+.copyright {
+    color: #5c5c5c;
+}
+
+.copyright span {
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: 9pt;
+}
+
+
+
+@media (min-width: 992px) { 
+    .inner-custom {
+        overflow:hidden;
+        height: 350px;
+        margin: 0 auto;
+        margin-top: 10px;
+        border-radius: 20px 20px 20px 20px;
+    } 
+    .carousel-inner {
+        overflow:hidden;
+        height: 100%;
+        margin: 0 auto;
+    } 
+    .carousel-inner .carousel-item {
+        margin-top: -10%;
+        /* text-align: center; */
+    }
+    .profil h5 {
+        margin-top: 25px;
+        font-size: 20pt;
+        font-weight: 200;
+        font-family: Lobster;
+    }
+
+    .profil .circle {
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        border: 1px solid rgba(85, 85, 85, 0.438);
+        text-align: right;
+        float: right;
+    }
+    .profil {
+        margin-top: 20px;
+        margin-bottom: 0px;
+    }
+
+    .center-block {
+        text-align: center;margin-left: auto;
+        margin-right: auto;
+    }
+    .card-group .card {
+        margin-bottom: 15px;
+    }
+    .float{
+        position:fixed;
+        width:60px;
+        height:60px;
+        bottom:40px;
+        right:20%;
+        /* background-color:#0C9; */
+        /* color:#FFF; */
+        border-radius:50px;
+        text-align:center;
+        box-shadow: 2px 2px 3px #999;
+    }
+    .my-float{
+        width: 60px;
+        height: 60px;
+        text-align: center;
+    }
+    .small {
+        width: 150px;
+        height: 150px;
+    }
+    .card-tall {
+        height: auto;
+        vertical-align: top;
+    }
+    .card-tall .card{
+        height: 370px;
+        margin-bottom: 25px;
+        /* margin-left: -5px; */
+        margin-right: -5px;
+    }
+    .card-tall .card-admin{
+        height: 400px;
+    }
+    .card-small img{
+        /* width: 100%; */
+        object-position: center;
+        object-fit:cover;
+        height: 250px;
+        /* max-height: 150px; */
+    }
+    .minim {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+}
+
+@media (max-width: 575.98px) { 
+
+    .center-mobile {
+        text-align: center !important;
+    }
+    .small {
+        width: 130px;
+        height: 130px;
+    }
+    .img-mid-img {
+        margin-left: -95px;
+        margin-right: 60px;
+    }
+    .card-small {
+        width: 52%;
+        /* margin-left: -50px;
+        margin-right: 5px; */
+        text-align: start;
+        margin: -5px;
+    }
+
+    .card-small img{
+        /* width: 100%; */
+        object-position: center;
+        object-fit:cover;
+        height: 150px;
+        /* max-height: 150px; */
+    }
+    .card .card-title{
+        margin-top: -10px;
+        text-align: left;
+        font-family: Poppins;
+        font-size: 9pt;
+        margin-left: -10px;
+    }
+    .card .card-text{
+        text-align: left;
+        font-family: Poppins;
+        font-size: 10pt;
+        margin-top: -5px;
+        margin-left: -10px;
+    }
+    .card-tall {
+        display: inline-block;
+        height: auto;
+        vertical-align: top;
+    }
+    .card-tall .card{
+        height: 230px;
+        margin-bottom: 25px;
+        /* margin-left: -5px; */
+        margin-right: -5px;
+    }
+    .card-tall .card-admin{
+        height: 290px;
+    }
+    .minim {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .carousel-inner {
+        /* overflow:hidden; */
+        height: 100%;
+        /* margin: 0 auto; */
+        object-fit: cover;
+    } 
+    .inner-custom {
+        overflow:hidden;
+        height: 200px;
+        margin: 0 auto;
+        text-align: center;
+        margin-top: 10px;
+        object-fit: cover !important;
+        border-radius: 20px 20px 20px 20px;
+        vertical-align: auto;
+
+    }
+
+    .carousel .carousel-indicators {
+        margin-bottom: -5px;
+    }
+}
