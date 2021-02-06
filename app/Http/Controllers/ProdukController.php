@@ -15,8 +15,8 @@ class ProdukController extends Controller
         $produk_all = Produk::get();
         $produk = Produk::inRandomOrder()->paginate(6);
         $kategori = Kategori::get()->sortBy('id');
-        $url_wa = "https://api.whatsapp.com/send?phone=".$profil->no_wa;
-        return view('produk', compact('produk', 'profil', 'kategori', 'promo', 'produk_all', 'url_wa'));
+        // $url_wa = "https://api.whatsapp.com/send?phone=".$profil->no_wa;
+        return view('produk', compact('produk', 'profil', 'kategori', 'promo', 'produk_all'));
     }
 
     public function produk_admin(Produk $produk, GambarProduk $gambarProduk)

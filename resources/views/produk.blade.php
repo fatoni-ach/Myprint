@@ -144,9 +144,11 @@
 <!-- end pagination -->
 
 <!-- floating button -->
-<a href="{{$url_wa}}" class="float">
+@if($profil->count() > 0)
+<a href="https://api.whatsapp.com/send?phone={{$profil->no_wa}}" class="float">
   <img src="{{Asset('storage/images/wa.png')}}" class="fa fa-plus my-float"></img>
 </a>
+@endif
 <!-- end floating button -->
 <br>
 <br>
