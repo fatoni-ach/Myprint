@@ -41,7 +41,11 @@
       <a href="{{Route('show.produk', $p->slug)}}">
       <div class="col-lg-4 card-small card-tall">
           <div class="card card-admin">
+              @if($p->gambar_produks()->get()->count() > 0)
               <img class="card-img-top" src="{{Asset($p->gambar_produks()->get()->first()->takeImage())}}" alt="Card image cap">
+              @else
+              <img class="card-img-top" src="" alt="Card image cap">
+              @endif
               <hr class="minim">
               <div class="card-body">
                   <h5 class="card-title">{{$p->nama}} </h5>

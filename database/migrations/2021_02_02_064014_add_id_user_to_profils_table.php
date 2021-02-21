@@ -41,19 +41,19 @@ class AddIdUserToProfilsTable extends Migration
      */
     public function down()
     {
-        Schema::table('profils', function (Blueprint $table) {
+        Schema::dropIfExists('profils', function (Blueprint $table) {
             $table->dropColumn('user_id');
         });
-        Schema::table('produks', function (Blueprint $table) {
+        Schema::dropIfExists('produks', function (Blueprint $table) {
             $table->dropColumn('kategori_id');
         });
-        Schema::table('gambar_produks', function (Blueprint $table) {
+        Schema::dropIfExists('gambar_produks', function (Blueprint $table) {
             $table->dropColumn('produk_id');
         });
-        Schema::table('unggulan_produks', function (Blueprint $table) {
+        Schema::dropIfExists('unggulan_produks', function (Blueprint $table) {
             $table->dropColumn('produk_id');
         });
-        Schema::table('produks', function (Blueprint $table) {
+        Schema::dropIfExists('promos', function (Blueprint $table) {
             $table->dropColumn('produk_id');
         });
     }

@@ -15,9 +15,11 @@ class CreateProfilsTable extends Migration
     {
         Schema::create('profils', function (Blueprint $table) {
             $table->id();
-            $table->string('nama', 191);
+            $table->string('nama', 191)->nullable;
             $table->string('alamat', 191);
-            $table->integer('no_wa');
+            $table->integer('no_wa')->nullable();
+            $table->string('instagram', 191);
+            $table->string('facebook', 191);
             $table->string('link_gambar', 191);
             $table->timestamps();
         });

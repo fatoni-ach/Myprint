@@ -4,18 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\{Produk, Kategori, GambarProduk, Profil, Promo};
+use App\Classes\OptimizeImage;
 
 class ProdukController extends Controller
 {
     
-    public function index()
+    public function index(Request $request)
     {   
         $promo = Promo::latest()->get();
         $profil = Profil::get()->first();
         $produk_all = Produk::get();
-        $produk = Produk::inRandomOrder()->paginate(6);
         $kategori = Kategori::get()->sortBy('id');
         // $url_wa = "https://api.whatsapp.com/send?phone=".$profil->no_wa;
+        if(isset($request['sort'])){
+            $produk = new Produk;
+            $produk = $this->sort($request['sort'], "kategori", $produk);
+        } else{
+            $produk = Produk::latest()->paginate(6);
+        }
         return view('produk', compact('produk', 'profil', 'kategori', 'promo', 'produk_all'));
     }
 
@@ -26,11 +32,17 @@ class ProdukController extends Controller
         return view('admin.produk_admin', compact('produk', 'kategori'));
     }
 
-    public function kategori(Kategori $kategori)
+    public function kategori(Kategori $kategori, Request $request)
     {   
+        if(isset($request['sort'])){
+            // $produk = $this->sort($request['sort'], "kategori");
+            $produk = Produk::where('kategori_id', $kategori->id);
+            $produk = $this->sort($request['sort'], "kategori", $produk);
+        } else{
+            $produk = Produk::where('kategori_id', $kategori->id)->paginate(6);
+        }
         $profil = Profil::get()->first();
         $promo = Promo::latest()->get();
-        $produk = Produk::where('kategori_id', $kategori->id)->paginate(6);
         $produk_all = Produk::get();
         $k_aktif = $kategori;
         $kategori = Kategori::get()->sortBy('id');
@@ -56,8 +68,13 @@ class ProdukController extends Controller
             $slug = \Str::slug($request['nama']);
             if (file_exists(request()->file('gambar'))){
                 $thumbnail = request()->file('gambar');
-                $thumbnailUrl = $thumbnail->store("public/images/produks");
-                $thumbnailUrl = preg_replace("/public/i", "", $thumbnailUrl );
+                $path = base_path()."/public/storage/images/produks";
+                // dd($path);
+                $name = md5(microtime()).'_'.$thumbnail->getClientOriginalName();
+                $thumbnailUrl = $thumbnail->move($path, $name);
+                $optimizer = new OptimizeImage();
+                $optimizer->run_optimizer($thumbnailUrl);
+                $thumbnailUrl = "/images/produks/".$name;
             } else {
                 $thumbnailUrl = "";
             }
@@ -99,9 +116,13 @@ class ProdukController extends Controller
         $promo = Promo::latest()->get();
         $produk_all = Produk::get();
         // dd($produk_all);
-        $wa = Profil::get()->first()->no_wa;
-        $url_wa = "https://api.whatsapp.com/send?phone=".$wa."&text=".url()->current()." .info produk ?";
-        return view('show', compact('produk', 'promo', 'url_wa'));
+        $profil = Profil::get()->first();
+        if(isset($profil)){
+            $url_wa = "https://api.whatsapp.com/send?phone=".$profil->url_wa."&text=".url()->current()." .info produk ?";
+        } else {
+            $url_wa = "";
+        }
+        return view('show', compact('produk', 'promo', 'url_wa', 'profil'));
     }
 
     public function edit(Request $request,Produk $produk, Kategori $kategori)
@@ -110,8 +131,14 @@ class ProdukController extends Controller
             if (file_exists(request()->file('gambar'))){
                 $this->deleteImage($produk);
                 $thumbnail = request()->file('gambar');
-                $thumbnailUrl = $thumbnail->store("public/images/produks");
-                $thumbnailUrl = preg_replace("/public/i", "", $thumbnailUrl );
+                $name = md5(microtime()).'_'.$thumbnail->getClientOriginalName();
+                
+                $path = base_path()."/public/storage/images/produks";
+                $thumbnailUrl = $thumbnail->move($path, $name);
+                $optimizer = new OptimizeImage();
+                $optimizer->run_optimizer($thumbnailUrl);
+                $thumbnailUrl = "/images/produks/".$name;
+                
                 $produk->gambar_produks()->first()->update(['link_gambar'=> $thumbnailUrl]);
             }
 
@@ -128,11 +155,52 @@ class ProdukController extends Controller
     {
         $link = $produk->gambar_produks()->get();
         foreach ($link as $l){
-            $urlImage = public_path().($l->first()->takeImage());
+            $urlImage = base_path()."/public".($l->takeImage());
             if(file_exists($urlImage)){
                 unlink($urlImage);
             }
         }
+    }
+
+    public function sort($by, $tipe, $produk)
+    {
+        // if($tipe == "normal"){
+        //     switch ($by) {
+        //         case "terbaru":
+        //             $produk = Produk::orderBy('created_at', 'desc')->paginate(6);
+        //             break;
+        //         case "terlama":
+        //             $produk = Produk::orderBy('created_at', 'asc')->paginate(6);
+        //             break;
+        //         case "termahal":
+        //             $produk = Produk::orderBy('harga', 'desc')->paginate(6);
+        //             break;
+        //         case "termurah":
+        //             $produk = Produk::orderBy('harga', 'asc')->paginate(6);
+        //             break;
+        //         default:
+        //         " ";
+        //     }
+        // }
+        if($tipe == "kategori"){
+            switch ($by) {
+                case "terbaru":
+                    $produk = $produk->orderBy('created_at', 'desc')->paginate(6);
+                    break;
+                case "terlama":
+                    $produk = $produk->orderBy('created_at', 'asc')->paginate(6);
+                    break;
+                case "termahal":
+                    $produk = $produk->orderBy('harga', 'desc')->paginate(6);
+                    break;
+                case "termurah":
+                    $produk = $produk->orderBy('harga', 'asc')->paginate(6);
+                    break;
+                default:
+                " ";
+            }
+        }
+        return $produk;
     }
 
 }

@@ -25,6 +25,6 @@ class ChangeProfilsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('profils');
     }
 }

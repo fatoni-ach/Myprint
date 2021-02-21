@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\{Produk, Promo};
+use App\Classes\OptimizeImage;
 
 class PromoController extends Controller
 {
@@ -58,8 +59,12 @@ class PromoController extends Controller
     {
         if (file_exists($request->file('gambar'))){
             $thumbnail = $request->file('gambar');
-            $thumbnailUrl = $thumbnail->store("public/images/promo");
-            $thumbnailUrl = preg_replace("/public/i", "", $thumbnailUrl );
+            $path = base_path()."/public/storage/images/promo";
+            $name = md5(microtime()).'_'.$thumbnail->getClientOriginalName();
+            $thumbnailUrl = $thumbnail->move($path, $name);
+            $optimizer = new OptimizeImage();
+            $optimizer->run_optimizer($thumbnailUrl);
+            $thumbnailUrl = "/images/promo/".$name;
         } else {
             $thumbnailUrl = "";
         }
@@ -68,7 +73,8 @@ class PromoController extends Controller
 
     public function deleteImage($promo)
     {
-        $urlImage = public_path().($promo->takeImage());
+        $urlImage = base_path()."/public".($promo->takeImage());
+        // dd($urlImage);
         if(file_exists($urlImage)){
             unlink($urlImage);
         }

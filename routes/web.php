@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', 'ProdukController@index')->name('produk');
+Route::get('/sort', 'ProdukController@index')->name('produk.sort');
 Route::get('/l', 'LoginController@login')->name('login');
 Route::post('/l', 'LoginController@login')->name('login');
 
@@ -56,5 +57,6 @@ Route::middleware('auth')->group(function ()
 Route::get('/logout/admin', 'LoginController@logout')->name('logout');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/kategori/{kategori:id}', 'ProdukController@kategori')->name('produk.kategori');
+Route::get('/kategori/{kategori:id}/sort', 'ProdukController@kategori')->name('produk.kategori.sort');
 Route::get('/produk/{produk:slug}', 'ProdukController@show_produk')->name('show');
 Route::get('/search', 'SearchController@produk')->name('search.produk');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\{GambarProduk};
+use App\Classes\OptimizeImage;
 
 class GambarController extends Controller
 {
@@ -35,8 +36,13 @@ class GambarController extends Controller
     {
         if (file_exists($request->file('gambar'))){
             $thumbnail = $request->file('gambar');
-            $thumbnailUrl = $thumbnail->store("public/images/produks");
-            $thumbnailUrl = preg_replace("/public/i", "", $thumbnailUrl );
+            $path = base_path()."/public/storage/images/produks";
+            // dd($path);
+            $name = md5(microtime()).'_'.$thumbnail->getClientOriginalName();
+            $thumbnailUrl = $thumbnail->move($path, $name);
+            $optimizer = new OptimizeImage();
+            $optimizer->run_optimizer($thumbnailUrl);
+            $thumbnailUrl = "/images/produks/".$name;
         } else {
             $thumbnailUrl = "";
         }
@@ -45,9 +51,12 @@ class GambarController extends Controller
 
     public function deleteImage($gambar)
     {
-        $urlImage = public_path().($gambar->takeImage());
-        if(file_exists($urlImage)){
-            unlink($urlImage);
+        if($gambar->link_gambar != null){
+            $urlImage = base_path()."/public".($gambar->takeImage());
+            // dd($urlImage);
+            if(file_exists($urlImage)){
+                unlink($urlImage);
+            }
         }
         
     }

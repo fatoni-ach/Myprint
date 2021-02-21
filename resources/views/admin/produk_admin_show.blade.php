@@ -6,38 +6,45 @@
   @include('layouts.master_navbar')
 @endif
 <!-- produk -->
-<div class="row center-block">
+<div class="row d-flex justify-content-center">
     <div class="card-group col-md-8 center-block">
-        <div class="col">
+        <!--<div class="col">-->
             <div class="card">
                 <a class="btn btn-light btn-back" href="{{Route('produk.admin')}}"><img src="{{Asset('storage/images/back.png')}}" alt=""></a>
                 <!-- carousel  -->
-                <div id="carouselExampleIndicators" class="carousel slide" data-interval="3500" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                    @foreach ($produk->gambar_produks()->get() as $g)
-                    <li data-target="#carouselExampleIndicators" data-slide-to="{{$loop->index}}" 
-                        @if($loop->index == 0) class="active" @endif >
-                    </li>
-                    @endforeach
-                    </ol>
-                    <div class="carousel-inner">
-                    @foreach ($produk->gambar_produks()->get() as $g)
-                    <div 
-                        @if($loop->index == 0) class="carousel-item active" @else class="carousel-item" @endif>
-                        <img class="center-block w-100" src="{{Asset($g->takeImage())}}" alt="First slide">
-                    </div>
-                    @endforeach
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                    </a>
-                </div>
+                <!--<div id="carouselExampleIndicators" class="carousel slide" data-interval="3500" data-ride="carousel">-->
+                <!--    <ol class="carousel-indicators">-->
+                <!--    @foreach ($produk->gambar_produks()->get() as $g)-->
+                <!--    <li data-target="#carouselExampleIndicators" data-slide-to="{{$loop->index}}" -->
+                <!--        @if($loop->index == 0) class="active" @endif >-->
+                <!--    </li>-->
+                <!--    @endforeach-->
+                <!--    </ol>-->
+                <!--    <div class="carousel-inner">-->
+                <!--    @foreach ($produk->gambar_produks()->get() as $g)-->
+                <!--    <div -->
+                <!--        @if($loop->index == 0) class="carousel-item active" @else class="carousel-item" @endif>-->
+                <!--        <img class="center-block w-100" src="{{Asset($g->takeImage())}}" alt="First slide">-->
+                <!--    </div>-->
+                <!--    @endforeach-->
+                <!--    </div>-->
+                <!--    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">-->
+                <!--    <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+                <!--    <span class="sr-only">Previous</span>-->
+                <!--    </a>-->
+                <!--    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">-->
+                <!--    <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+                <!--    <span class="sr-only">Next</span>-->
+                <!--    </a>-->
+                <!--</div>-->
                 <!-- end carousel -->
+                <div class="carousel" data-flickity='{ "lazyLoad": true, "autoPlay": true,"wrapAround": true, "autoPlay": 3500 , "pauseAutoPlayOnHover": false, "resize": false,"fullscreen": true}'>
+                    @foreach ($produk->gambar_produks()->get() as $g)
+                    <div class="carousel-cell">
+                        <img class="carousel-image" data-flickity-lazyload="{{Asset($g->takeImage())}}" alt="Gambar">
+                    </div>
+                    @endforeach
+                </div>
                 <hr>
                 <div class="center-mobile">
                     <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahgambar">tambah gambar</button>
@@ -54,7 +61,7 @@
 
                 </div>
             </div>
-        </div>
+        <!--</div>-->
     </div>
 </div>
         <!-- end produk -->

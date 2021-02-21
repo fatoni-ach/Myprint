@@ -12,8 +12,9 @@ class SearchController extends Controller
         $promo = Promo::latest()->get();
         $profil = Profil::get()->first();
         $produk_all = Produk::get();
-        $search = $request['search'];
-        $produk = Produk::where('nama', 'ilike', "%$search%")->latest()->paginate(3);
+        $search = strtolower($request['search']);
+        $produk = Produk::whereRaw('lower(nama) like (?)',["%{$search}%"])->latest()->paginate(3);
+        // whereRaw("UPPER('{$column}') LIKE '%'". strtoupper($value)."'%'"); 
         // dd($produk);
         $kategori = Kategori::get()->sortBy('id');
         return view('produk', compact('produk', 'profil', 'kategori', 'promo', 'produk_all', 'search'));
@@ -23,7 +24,7 @@ class SearchController extends Controller
     {
         $produk_all = Produk::get();
         $search = $request['search'];
-        $produk = Produk::where('nama', 'ilike', "%$search%")->latest()->paginate(3);
+        $produk = Produk::whereRaw('lower(nama) like (?)',["%{$search}%"])->latest()->paginate(3);
         // dd($produk);
         $kategori = Kategori::get()->sortBy('id');
         return view('admin.produk_admin', compact('produk', 'kategori', 'produk_all', 'search'));
