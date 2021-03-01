@@ -66,11 +66,12 @@ class ProfilController extends Controller
     }
 
     public function deleteImage($profil)
-    {
-        $urlImage = base_path()."/public".($profil->takeImage());
-        if(file_exists($urlImage)){
-            unlink($urlImage);
-        }   
+    {   if ( $profil->link_gambar != null || $profil->link_gambar != ""){
+            $urlImage = base_path()."/public".($profil->takeImage());
+            if(file_exists($urlImage)){
+                unlink($urlImage);
+            }   
+        }
     }
 
     public function validation($request)

@@ -14,10 +14,15 @@ class SearchController extends Controller
         $produk_all = Produk::get();
         $search = strtolower($request['search']);
         $produk = Produk::whereRaw('lower(nama) like (?)',["%{$search}%"])->latest()->paginate(3);
+        if(isset($request['sort'])){
+            $sorted = $request['sort'];
+        } else {
+            $sorted = null;
+        }
         // whereRaw("UPPER('{$column}') LIKE '%'". strtoupper($value)."'%'"); 
         // dd($produk);
         $kategori = Kategori::get()->sortBy('id');
-        return view('produk', compact('produk', 'profil', 'kategori', 'promo', 'produk_all', 'search'));
+        return view('newproduk', compact('produk', 'profil', 'kategori', 'promo', 'produk_all', 'search', 'sorted'));
     }
 
     public function produk_admin(Request $request)

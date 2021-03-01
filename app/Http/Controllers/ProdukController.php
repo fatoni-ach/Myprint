@@ -19,10 +19,12 @@ class ProdukController extends Controller
         if(isset($request['sort'])){
             $produk = new Produk;
             $produk = $this->sort($request['sort'], "kategori", $produk);
+            $sorted = $request['sort'];
         } else{
             $produk = Produk::latest()->paginate(6);
+            $sorted = 'terbaru';
         }
-        return view('produk', compact('produk', 'profil', 'kategori', 'promo', 'produk_all'));
+        return view('newproduk', compact('produk', 'profil', 'kategori', 'promo', 'produk_all' , 'sorted'));
     }
 
     public function produk_admin(Produk $produk, GambarProduk $gambarProduk)
@@ -38,8 +40,10 @@ class ProdukController extends Controller
             // $produk = $this->sort($request['sort'], "kategori");
             $produk = Produk::where('kategori_id', $kategori->id);
             $produk = $this->sort($request['sort'], "kategori", $produk);
+            $sorted = $request['sort'];
         } else{
             $produk = Produk::where('kategori_id', $kategori->id)->paginate(6);
+            $sorted = null;
         }
         $profil = Profil::get()->first();
         $promo = Promo::latest()->get();
@@ -47,7 +51,7 @@ class ProdukController extends Controller
         $k_aktif = $kategori;
         $kategori = Kategori::get()->sortBy('id');
         $url_wa = "https://api.whatsapp.com/send?phone=".$profil->no_wa;
-        return view('produk', compact('produk', 'profil', 'kategori', 'k_aktif', 'promo', 'produk_all', 'url_wa'));
+        return view('newproduk', compact('produk', 'profil', 'kategori', 'k_aktif', 'promo', 'produk_all', 'url_wa', 'sorted'));
     }
 
     public function kategori_admin(Kategori $kategori)
@@ -122,7 +126,7 @@ class ProdukController extends Controller
         } else {
             $url_wa = "";
         }
-        return view('show', compact('produk', 'promo', 'url_wa', 'profil'));
+        return view('newshow', compact('produk', 'promo', 'url_wa', 'profil'));
     }
 
     public function edit(Request $request,Produk $produk, Kategori $kategori)

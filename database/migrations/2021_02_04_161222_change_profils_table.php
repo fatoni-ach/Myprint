@@ -14,7 +14,7 @@ class ChangeProfilsTable extends Migration
     public function up()
     {
         Schema::table('profils', function (Blueprint $table) {
-            $table->string('no_wa', 191)->change();
+            $table->string('no_wa', 191)->nullable()->change();
         });
     }
 

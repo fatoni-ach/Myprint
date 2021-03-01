@@ -37,7 +37,7 @@
        <br>
       <div class="d-flex justify-content-center">
 
-        <footer class="copyright">2021 &copy; <span> MyPrint Advertising</span></footer>
+        <footer class="copyright">2021 &copy; <span>Fatoni to MyPrint Advertising</span></footer>
       </div>
         <br>
     </div>

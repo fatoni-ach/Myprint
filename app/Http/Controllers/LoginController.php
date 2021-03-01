@@ -12,8 +12,11 @@ class LoginController extends Controller
         if($request->method() == "POST"){
             // dd($request->only('name', 'password'));
             if (Auth::attempt($request->only('name', 'password'))){
-                return redirect()->route('produk');
+                return redirect(route('profil'));
             }
+        }
+        if(Auth::check()){
+            return redirect(route('produk.admin'));
         }
         return view('layouts/login');
     }
